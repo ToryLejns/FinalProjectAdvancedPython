@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+</head>
+<body>
+    <h2>Welcome, {{ user.username }}!</h2>
+    <a href="{{ url_for('profile') }}">Go to Profile</a>
+    <p>Manage your shortened URLs below:</p>
+
+    <!-- URL Shortening Form -->
+    <form action="/shorten" method="POST">
+        <label for="url">Enter URL to shorten:</label>
+        <input type="url" id="url" name="url" required>
+        <button type="submit">Shorten URL</button>
+    </form>
+
+    <h3>Your Shortened URLs:</h3>
+    <ul>
+        {% for url in user_urls %}
+            <li>
+                <a href="{{ url.original_url }}" target="_blank">{{ url.original_url }}</a>
+                - Short Code: <a href="/{{ url.short_code }}">{{ url.short_code }}</a>
+            </li>
+        {% else %}
+            <li>No URLs shortened yet.</li>
+        {% endfor %}
+    </ul>
+
+    <a href="/logout">Logout</a>
+</body>
+</html>
